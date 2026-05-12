@@ -106,8 +106,12 @@ app.use('/api/history', historyRoutes);
 // ──────────────────────────────────────────
 // ARCHIVOS ESTÁTICOS (Frontend con Vite)
 // ──────────────────────────────────────────
-const DIST_PATH = path.join(__dirname, '../../frontend/dist');
-const PUBLIC_PATH = path.join(__dirname, '../../frontend/public');
+const DIST_PATH = process.env.VERCEL 
+    ? path.join(process.cwd(), 'frontend/dist')
+    : path.join(__dirname, '../../frontend/dist');
+const PUBLIC_PATH = process.env.VERCEL 
+    ? path.join(process.cwd(), 'frontend/public')
+    : path.join(__dirname, '../../frontend/public');
 
 // Servir la carpeta optimizada de Vite si existe, de lo contrario usar public (legacy)
 app.use(express.static(DIST_PATH));
