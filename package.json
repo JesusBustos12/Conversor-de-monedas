@@ -5,7 +5,7 @@
   "scripts": {
     "install:all": "cd server && npm install && cd ../frontend && npm install",
     "dev:full": "cd server && npm run dev",
-    "build": "cd frontend && npm install && npm run build",
+    "build": "cd frontend && npm install && npm run build && cd .. && mkdir -p public && cp -r frontend/dist/* public/",
     "start": "node app.js",
     "test": "cd server && npm test",
     "docker:up": "docker-compose up --build -d",
