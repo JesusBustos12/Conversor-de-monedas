@@ -1,0 +1,28 @@
+{
+  "name": "currencyhub-root",
+  "version": "1.0.0",
+  "description": "CurrencyHub - Monolito Fullstack (Node.js + MySQL)",
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../frontend && npm install",
+    "dev:full": "cd server && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "node app.js",
+    "test": "cd server && npm test",
+    "docker:up": "docker-compose up --build -d",
+    "docker:down": "docker-compose down"
+  },
+  "keywords": [],
+  "author": "Jesús Bustos Arizmendi",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.2",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
+    "mysql2": "^3.21.1"
+  }
+}

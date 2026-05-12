@@ -1,0 +1,23 @@
+{
+  "name": "CurrencyHub | Inteligencia en Divisas",
+  "short_name": "CurrencyHub",
+  "description": "Procesamiento de divisas inteligente en tiempo real con precisión de grado bancario. Monitoriza el mercado Forex global.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0B0E11",
+  "theme_color": "#FFB700",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

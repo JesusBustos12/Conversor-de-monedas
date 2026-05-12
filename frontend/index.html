@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurrencyHub | Inteligencia en Conversión de Divisas y Mercado Forex</title>
+    <meta name="description"
+        content="Plataforma de procesamiento de divisas con precisión de grado bancario. Monitoriza tasas interbancarias y tendencias del mercado global en tiempo real.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/logo.png">
+
+    <!-- SEO Básico Orientado a Finanzas -->
+    <meta name="author" content="Jesús Bustos Arizmendi">
+    <meta name="keywords"
+        content="conversor de divisas, tipo de cambio en tiempo real, mercado forex, finanzas personales, tasas interbancarias, calculadora de moneda, exchange rates API, hub financiero">
+    <meta name="theme-color" content="#FFB700">
+    <link rel="canonical" href="https://currencyhub-fintech.com/">
+
+    <!-- Open Graph (Fintech Optimized) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CurrencyHub | Inteligencia en Conversión de Divisas y Mercado Forex">
+    <meta property="og:description"
+        content="Plataforma de procesamiento de divisas con precisión de grado bancario. Monitoriza tasas interbancarias y tendencias del mercado global en tiempo real.">
+    <meta property="og:image" content="https://currencyhub-fintech.com/assets/logo.png">
+
+    <!-- Twitter Cards (Financial Analytics Focus) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CurrencyHub: Hub de Análisis y Conversión de Monedas">
+    <meta name="twitter:description"
+        content="Accede a tasas de cambio en tiempo real y análisis de tendencias financieras. La herramienta definitiva para el seguimiento de divisas globales.">
+    <meta name="twitter:image" content="https://currencyhub-fintech.com/assets/logo.png">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/css/styles.css">
+</head>
+
+<body data-theme="light">
+
+    <header class="header">
+        <div class="header__container container">
+            <div class="logo">
+                <div class="logo-shell">
+                    <img src="/assets/convertir-dinero.png" alt="CurrencyHub Logo" id="main-logo" class="logo__img"
+                        fetchpriority="high">
+                </div>
+                <div class="logo__text">
+                    <span class="logo__name">CurrencyHub</span>
+                    <span class="logo__edition" id="theme-label">LITE EDITION</span>
+                </div>
+            </div>
+
+            <nav class="nav">
+                <div class="status-badge">
+                    <span class="status-badge__dot"></span>
+                    <span class="status-badge__text" id="market-status">MARKET LIVE</span>
+                </div>
+
+                <div class="nav__controls">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="toggle-btn" aria-label="Cambiar tema">
+                        <div class="toggle-btn__circle"></div>
+                    </button>
+
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle" class="lang-btn">ES / EN</button>
+
+                    <!-- User Actions -->
+                    <div id="user-controls" class="user-controls hidden">
+                        <button id="edit-profile" class="profile-avatar-btn" title="Editar Perfil">
+                            <div id="nav-avatar" class="nav-avatar">
+                                <i class="icon-avatar"></i>
+                            </div>
+                        </button>
+                        <button id="logout-btn" class="icon-btn logout-img-btn" title="Cerrar Sesión">
+                            <img src="/assets/logout.png" alt="Cerrar Sesión" class="logout-icon-img"
+                                loading="lazy">
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app-container" class="container">
+        <!-- Auth Section (Login / Register) -->
+        <section id="auth-section" class="auth-card">
+            <div class="auth-logo">
+                <div class="logo-shell logo-shell--large">
+                    <img src="/assets/convertir-dinero.png" alt="CurrencyHub Logo" class="auth-logo__img"
+                        fetchpriority="high">
+                </div>
+                <h2 class="auth-logo__text">CurrencyHub</h2>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" id="tab-login">LOGIN</button>
+                <button class="auth-tab" data-tab="register" id="tab-register">REGISTER</button>
+            </div>
+
+            <form id="auth-form" class="auth-form">
+                <!-- Form content will be injected or toggled via JS -->
+                <div id="form-fields"></div>
+                <button type="submit" id="auth-submit" class="btn-primary">SIGN IN</button>
+            </form>
+
+            <p class="auth-footer" id="auth-footer-text">PROTECTED BY BANK-GRADE ENCRYPTION & SECURITY PROTOCOLS</p>
+        </section>
+
+        <!-- Dashboard Section (Hidden by default) -->
+        <section id="dashboard-section" class="dashboard hidden">
+            <div class="dashboard__layout">
+                <div class="dashboard__left">
+                    <div class="dashboard__header">
+                        <div class="welcome-msg">
+                            <h1><span id="welcome-title">Loading...</span></h1>
+                            <p>Procesamiento de divisas inteligente en tiempo real con precisión de nivel bancario.</p>
+                        </div>
+                    </div>
+
+                    <div class="card conversion-card">
+                        <div class="conversion-card__selectors">
+                            <div class="selector-group">
+                                <label>FROM SOURCE</label>
+                                <div class="custom-dropdown" id="dropdown-from" role="combobox" aria-expanded="false"
+                                    aria-haspopup="listbox" aria-label="Seleccionar moneda de origen">
+                                    <div class="dropdown-trigger" tabindex="0">
+                                        <img src="https://flagcdn.com/us.svg" alt="USD Flag" class="flag-icon"
+                                            id="selected-from-flag">
+                                        <span class="currency-code" id="selected-from-code">USD</span>
+                                    </div>
+                                    <div class="dropdown-menu" id="menu-from">
+                                        <div class="dropdown-search">
+                                            <input type="text" placeholder="Search currency..." id="search-from"
+                                                aria-label="Buscar moneda de origen">
+                                        </div>
+                                        <div class="dropdown-list" id="list-from" role="listbox"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="swap-currencies" class="swap-btn"
+                                aria-label="Intercambiar monedas de origen y destino">⇅</button>
+
+                            <div class="selector-group">
+                                <label>TO DESTINATION</label>
+                                <div class="custom-dropdown" id="dropdown-to" role="combobox" aria-expanded="false"
+                                    aria-haspopup="listbox" aria-label="Seleccionar moneda de destino">
+                                    <div class="dropdown-trigger" tabindex="0">
+                                        <img src="https://flagcdn.com/eu.svg" alt="EUR Flag" class="flag-icon"
+                                            id="selected-to-flag">
+                                        <span class="currency-code" id="selected-to-code">EUR</span>
+                                    </div>
+                                    <div class="dropdown-menu" id="menu-to">
+                                        <div class="dropdown-search">
+                                            <input type="text" placeholder="Search currency..." id="search-to"
+                                                aria-label="Buscar moneda de destino">
+                                        </div>
+                                        <div class="dropdown-list" id="list-to" role="listbox"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="conversion-card__inputs">
+                            <input type="number" id="amount" value="1000.00" step="0.01">
+                            <div class="result-display" aria-live="polite">
+                                <span id="result-amount">0.00</span>
+                                <span class="rate-info" id="current-rate">Sincronizando tasas...</span>
+                            </div>
+                        </div>
+
+                        <div class="conversion-card__footer">
+                            <div class="stat">
+                                <label id="lbl-interbank">INTERBANK RATE</label>
+                                <span class="stat__value positive" id="rate-percentage">+0.00%</span>
+                            </div>
+                            <div class="stat">
+                                <label id="lbl-daily-range">DAILY RANGE</label>
+                                <span class="stat__value" id="rate-range">0.918 - 0.931</span>
+                            </div>
+                            <button class="btn-primary" id="execute-btn">Execute Transfer ➔</button>
+                        </div>
+                    </div>
+
+                    <div class="dashboard__bottom-grid">
+                        <section class="card trend-card">
+                            <div class="card-header">
+                                <h2 id="title-trends">PERFORMANCE TREND</h2>
+                                <span class="badge trend-badge">↗ 1.2%</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="trend-chart"
+                                    aria-label="Gráfico de tendencia de rendimiento semanal de divisas"></canvas>
+                            </div>
+                        </section>
+
+                        <section class="card session-card">
+                            <h2 id="title-sessions">MARKET SESSION STATUS</h2>
+                            <ul class="session-list">
+                                <li>
+                                    <span id="city-london">London</span>
+                                    <span class="badge success" id="status-london">OPEN</span>
+                                </li>
+                                <li>
+                                    <span id="city-newyork">New York</span>
+                                    <span class="badge success" id="status-newyork">OPEN</span>
+                                </li>
+                                <li>
+                                    <span id="city-tokyo">Tokyo</span>
+                                    <span class="badge muted" id="status-tokyo">CLOSED</span>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="dashboard__right">
+                    <section class="card activity-card">
+                        <div class="card-header">
+                            <div class="card-header__title">
+                                <div class="icon-circle"><i class="icon-history"></i></div>
+                                <div>
+                                    <h2>Conversion Activity</h2>
+                                    <p id="sync-status">DATABASE SYNC SECURED</p>
+                                </div>
+                            </div>
+                            <button id="clear-history" class="icon-btn clear-btn" title="Vaciar Historial">
+                                <i class="icon-trash"></i>
+                            </button>
+                        </div>
+
+                        <div class="activity-timeline" id="activity-list">
+                            <!-- Activity items injected here -->
+                        </div>
+                    </section>
+
+                    <section class="card insights-card">
+                        <div class="insight-group">
+                            <div class="insight-item">
+                                <label id="lbl-monthly-insight">MONTHLY INSIGHT</label>
+                                <p id="lbl-exchanged">EXCHANGED</p>
+                                <h3 id="insight-total-amount">$42,850</h3>
+                            </div>
+                            <div class="insight-item">
+                                <a href="#" class="analytics-link" id="link-analytics">ANALYTICS REPORT</a>
+                                <p id="lbl-savings">SAVINGS</p>
+                                <h3 id="insight-savings-amount" class="highlight">$842.10</h3>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container container">
+            <p id="copyright">© 2026 CURRENCYHUB SYSTEMS</p>
+            <div class="system-status" role="status">
+                <span class="status-dot green"></span>
+                <span id="system-online">SYSTEM ONLINE</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Profile Edit Modal -->
+    <div id="profile-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content card">
+            <h2 id="modal-title">Configuración de Usuario</h2>
+            <form id="profile-form" class="auth-form">
+                <div class="form-group">
+                    <label id="lbl-edit-name">Nombre Completo</label>
+                    <input type="text" id="edit-name" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-edit-email">Correo Electrónico</label>
+                    <input type="email" id="edit-email" placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-edit-pass">Contraseña</label>
+                    <input type="password" id="edit-pass" placeholder="••••••••••••">
+                </div>
+
+                <div class="form-group profile-pic-group">
+                    <label id="lbl-edit-pic">FOTO DE PERFIL</label>
+                    <div class="pic-selector">
+                        <div class="pic-preview" id="edit-pic-preview">
+                            <i class="icon-avatar"></i>
+                        </div>
+                        <div class="pic-options">
+                            <p id="lbl-edit-opt-url">OPCIÓN 1: URL WEB</p>
+                            <input type="url" id="edit-pic-url" placeholder="Paste Image URL">
+                            <p id="lbl-edit-opt-file">OPCIÓN 2: ARCHIVO LOCAL</p>
+                            <input type="file" id="edit-file-input" accept="image/*" class="hidden">
+                            <button type="button" class="btn-secondary" id="edit-btn-upload">SUBIR DESDE
+                                DISPOSITIVO</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="lang-btn" id="close-modal">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btn-save-profile">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+
+</html>
