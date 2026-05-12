@@ -59,8 +59,8 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 
 app.use(cors({
     origin: (origin, callback) => {
-        // Permitir peticiones sin origin (mismo servidor, Postman en dev)
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Permitir peticiones sin origin, orígenes en la lista, o cualquier subdominio de Vercel
+        if (!origin || allowedOrigins.includes(origin) || (origin && origin.endsWith('.vercel.app'))) {
             callback(null, true);
         } else {
             callback(new Error('Origen no permitido por CORS'));
