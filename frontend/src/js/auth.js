@@ -229,40 +229,58 @@ export const Auth = {
 
         const emailInput = document.getElementById('auth-email');
         const passInput = document.getElementById('auth-pass');
+        const submitBtn = document.getElementById('auth-submit');
 
         if (!emailInput || !passInput) return;
 
         const email = emailInput.value;
         const pass = passInput.value;
 
-        if (this.isLogin) {
-            await this.login(email, pass);
-        } else {
-            const nameInput = document.getElementById('reg-name');
-            if (!nameInput) return;
+        // Visual loading effect
+        let originalText = '';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            originalText = submitBtn.textContent;
+            submitBtn.textContent = UI.lang === 'es' ? 'Procesando...' : 'Processing...';
+            submitBtn.classList.add('loading');
+        }
 
-            const name = nameInput.value;
-            const picUrlFromInput = document.getElementById('pic-url')?.value || '';
-            const finalPic = this.tempPic || picUrlFromInput;
+        try {
+            if (this.isLogin) {
+                await this.login(email, pass);
+            } else {
+                const nameInput = document.getElementById('reg-name');
+                if (!nameInput) return;
 
-            if (!name || !email || !pass) {
-                if (typeof UI !== 'undefined' && UI.showNotification) {
-                    UI.showNotification(UI.lang === 'es' ? 'Por favor, rellena todos los campos.' : 'Please fill in all fields.', 'error');
+                const name = nameInput.value;
+                const picUrlFromInput = document.getElementById('pic-url')?.value || '';
+                const finalPic = this.tempPic || picUrlFromInput;
+
+                if (!name || !email || !pass) {
+                    if (typeof UI !== 'undefined' && UI.showNotification) {
+                        UI.showNotification(UI.lang === 'es' ? 'Por favor, rellena todos los campos.' : 'Please fill in all fields.', 'error');
+                    }
+                    return;
                 }
-                return;
-            }
 
-            // Strict validation
-            const hasUpper = /[A-Z]/.test(pass);
-            const hasNum = /[0-9]/.test(pass);
-            if (pass.length < 8 || !hasUpper || !hasNum) {
-                if (typeof UI !== 'undefined' && UI.showNotification) {
-                    UI.showNotification(UI.lang === 'es' ? 'La contraseña no cumple los requisitos.' : 'Password does not meet requirements.', 'error');
+                // Strict validation
+                const hasUpper = /[A-Z]/.test(pass);
+                const hasNum = /[0-9]/.test(pass);
+                if (pass.length < 8 || !hasUpper || !hasNum) {
+                    if (typeof UI !== 'undefined' && UI.showNotification) {
+                        UI.showNotification(UI.lang === 'es' ? 'La contraseña no cumple los requisitos.' : 'Password does not meet requirements.', 'error');
+                    }
+                    return;
                 }
-                return;
-            }
 
-            await this.register(name, email, pass, finalPic);
+                await this.register(name, email, pass, finalPic);
+            }
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                submitBtn.classList.remove('loading');
+            }
         }
     },
 
@@ -292,9 +310,19 @@ export const Auth = {
             await API.post('/auth/register', { name, email, pass, picUrl });
             
             if (typeof UI !== 'undefined' && UI.showNotification) {
-                UI.showNotification(UI.lang === 'es' ? '¡Registro exitoso!' : 'Registration successful!', 'success');
+                UI.showNotification(UI.lang === 'es' ? '¡Registro exitoso! Redirigiendo a Login...' : 'Registration successful! Redirecting to Login...', 'success');
             }
-            await this.login(email, pass);
+            
+            // Redirigir a inicio de sesión tras un breve delay
+            setTimeout(() => {
+                this.switchTab(true);
+                // Rellenar el email para conveniencia del usuario
+                const emailInput = document.getElementById('auth-email');
+                if (emailInput) emailInput.value = email;
+                
+                const passInput = document.getElementById('auth-pass');
+                if (passInput) passInput.focus();
+            }, 2000);
         } catch (error) {
             // Inteligencia Enterprise: Si el usuario ya existe, facilitar el login
             if (error.message.includes('ya existe') || error.message.includes('already exists')) {
