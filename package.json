@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "CurrencyHub - Monolito Fullstack (Node.js + MySQL)",
   "scripts": {
+    "db:init": "node init-db.js",
     "install:all": "cd server && npm install && cd ../frontend && npm install",
     "dev:full": "cd server && npm run dev",
     "build": "cd frontend && npm install && npm run build && cd .. && mkdir -p public && cp -r frontend/dist/* public/",
