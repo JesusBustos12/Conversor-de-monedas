@@ -112,7 +112,13 @@ export const Main = {
     async calculateInsights() {
         try {
             const history = await API.get('/history');
-            if (history.length === 0) return;
+            if (history.length === 0) {
+                const totalEl = document.getElementById('insight-total-amount');
+                if (totalEl) totalEl.textContent = '$0';
+                const savingsEl = document.getElementById('insight-savings-amount');
+                if (savingsEl) savingsEl.textContent = '$0.00';
+                return;
+            }
 
             let totalUSD = 0;
             history.forEach(item => {
