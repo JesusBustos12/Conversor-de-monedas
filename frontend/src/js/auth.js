@@ -180,17 +180,17 @@ export const Auth = {
         }
     },
 
-    handleFileSelect(e) {
+    async handleFileSelect(e) {
         const file = e.target.files[0];
         if (!file) return;
 
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const base64 = event.target.result;
+        try {
+            const base64 = await UI.convertToWebp(file);
             this.handleUrlPreview(base64);
             this.tempPic = base64;
-        };
-        reader.readAsDataURL(file);
+        } catch (error) {
+            console.error("Error al convertir la imagen a WEBP:", error);
+        }
     },
 
     createInputField(parent, type, id, labelText, placeholder, icon) {
