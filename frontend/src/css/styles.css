@@ -125,6 +125,7 @@ label {
 .logo-shell {
     width: 7.2rem;
     height: 7.2rem;
+    background-color: #FFD05B;
     display: flex;
     background-color: transparent;
     align-items: center;
