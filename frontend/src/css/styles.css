@@ -126,7 +126,7 @@ label {
     width: 7.2rem;
     height: 7.2rem;
     background-color: #FFD05B;
-    border-radius: 100%;
+    border-radius: 28%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -519,8 +519,8 @@ label {
 
 /* Estilos específicos para la cabecera del dashboard (Welcome Message) */
 #dashboard-section .welcome-msg h1 {
-    font-size: 8.5rem;
-    /* Aumentado para impacto visual */
+    font-size: 10.5rem;
+    /* Aumentado solo para el título principal */
     font-weight: 800;
     color: var(--text-main);
     letter-spacing: -0.15rem;
@@ -543,6 +543,11 @@ label {
 
 .highlight {
     color: var(--primary-color);
+}
+
+/* Evitar que el nombre de usuario (span) se agrande junto con el h1 */
+#dashboard-section .welcome-msg h1 .highlight {
+    font-size: 8.5rem;
 }
 
 .dashboard__layout {
@@ -1919,14 +1924,14 @@ label {
 }
 
 .logo-shell--huge {
-    width: 12rem;
-    height: 12rem;
+    width: 16rem;
+    height: 16rem;
     animation: splash-pulse 2s infinite ease-in-out;
 }
 
 .splash-logo__img {
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 70%;
     object-fit: contain;
 }
 
