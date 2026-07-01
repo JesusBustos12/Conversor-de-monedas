@@ -126,6 +126,7 @@ label {
     width: 7.2rem;
     height: 7.2rem;
     background-color: #FFD05B;
+    border-radius: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,10 +145,6 @@ label {
 
 [data-theme="dark"] .logo__img {
     /* filter: brightness(1.2) contrast(1.1); */
-}
-
-.logo-shell:hover .logo__img {
-    transform: scale(1.15);
 }
 
 .logo__text {
