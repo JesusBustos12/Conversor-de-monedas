@@ -529,7 +529,7 @@ label {
 }
 
 #dashboard-section .welcome-msg p {
-    font-size: 3.25rem;
+    font-size: 5.25rem;
     /* Aumentado para mejor legibilidad */
     font-weight: 500;
     color: var(--text-muted);
@@ -547,7 +547,7 @@ label {
 
 /* Evitar que el nombre de usuario (span) se agrande junto con el h1 */
 #dashboard-section .welcome-msg h1 .highlight {
-    font-size: 8.5rem;
+    font-size: 7.5rem;
 }
 
 .dashboard__layout {
