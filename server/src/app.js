@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
@@ -73,6 +74,7 @@ app.use(cors({
 // SEGURIDAD: Limitar tamaño del body (Fix 12)
 // ──────────────────────────────────────────
 app.use(express.json({ limit: '1mb' }));
+app.use(cookieParser());
 
 // ──────────────────────────────────────────
 // SEGURIDAD: Rate Limiting

@@ -148,7 +148,8 @@ label {
     width: 85%;
     height: 85%;
     object-fit: contain;
-    mix-blend-mode: multiply; /* Fusiona el logo con el fondo amarillo */
+    mix-blend-mode: multiply;
+    /* Fusiona el logo con el fondo amarillo */
     transition: all 0.5s ease;
 }
 
@@ -534,7 +535,8 @@ label {
 
 /* Estilos específicos para la cabecera del dashboard (Welcome Message) */
 #dashboard-section .welcome-msg h1 {
-    font-size: 8.5rem; /* Aumentado para impacto visual */
+    font-size: 8.5rem;
+    /* Aumentado para impacto visual */
     font-weight: 800;
     color: var(--text-main);
     letter-spacing: -0.15rem;
@@ -543,10 +545,11 @@ label {
 }
 
 #dashboard-section .welcome-msg p {
-    font-size: 2.8rem; /* Aumentado para mejor legibilidad */
+    font-size: 3.25rem;
+    /* Aumentado para mejor legibilidad */
     font-weight: 500;
     color: var(--text-muted);
-    max-width: 65rem;
+    max-width: 100rem;
     line-height: 1.6;
 }
 
@@ -1185,12 +1188,12 @@ label {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     margin-top: 6px;
-    background: linear-gradient(90deg, 
-        transparent 30%, 
-        currentColor 30%, currentColor 40%, 
-        transparent 40%, transparent 60%, 
-        currentColor 60%, currentColor 70%, 
-        transparent 70%);
+    background: linear-gradient(90deg,
+            transparent 30%,
+            currentColor 30%, currentColor 40%,
+            transparent 40%, transparent 60%,
+            currentColor 60%, currentColor 70%,
+            transparent 70%);
     background-size: 100% 70%;
     background-repeat: no-repeat;
     background-position: center bottom 3px;
@@ -1835,16 +1838,16 @@ label {
     .container {
         padding: 1rem;
     }
-    
+
     h1 {
         font-size: 3.5rem;
     }
-    
+
     .conversion-card__selectors {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .swap-btn {
         align-self: center;
         margin: 1rem 0;
@@ -1853,20 +1856,22 @@ label {
 
 /* Small Mobile (max 480px) */
 @media (max-width: 480px) {
-    #amount, #result-amount {
+
+    #amount,
+    #result-amount {
         font-size: 3.5rem;
     }
-    
+
     .stat {
         flex: 1 1 100%;
         text-align: center;
     }
-    
+
     .conversion-card__footer {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .btn-primary {
         width: 100%;
         padding: 1.5rem;

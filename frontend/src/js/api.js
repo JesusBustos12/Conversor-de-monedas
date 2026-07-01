@@ -5,20 +5,16 @@ export const API = {
     baseUrl: '/api',
 
     async request(endpoint, options = {}) {
-        const token = localStorage.getItem('currencyHub_token');
         const headers = {
             'Content-Type': 'application/json',
             ...options.headers
         };
 
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
-
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}`, {
                 ...options,
-                headers
+                headers,
+                credentials: 'include' // Para enviar las cookies HttpOnly
             });
 
             const data = await response.json();

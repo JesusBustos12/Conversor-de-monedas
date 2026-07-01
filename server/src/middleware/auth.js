@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    // Intentar leer de cookies primero, luego del header Authorization por retrocompatibilidad
+    const token = req.cookies?.token || req.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
         return res.status(401).json({ message: 'No hay token, autorización denegada' });

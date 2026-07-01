@@ -84,18 +84,37 @@ router.post('/login', async (req, res, next) => {
         // Log Éxito
         await db.execute('INSERT INTO login_logs (user_id, email_attempted, status, ip_address) VALUES (?, ?, ?, ?)', [user.id, cleanEmail, 'SUCCESS', ip]);
 
+        // Set HttpOnly Cookie
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // true en producción
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000 // 24 horas
+        });
+
         res.json({
-            token,
             user: {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                picUrl: user.pic_url
+                picUrl: user.pic_url,
+                theme: user.theme,
+                lang: user.lang
             }
         });
     } catch (error) {
         next(error);
     }
+});
+
+// Logout
+router.post('/logout', (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
+    res.json({ message: 'Sesión cerrada exitosamente' });
 });
 
 module.exports = router;

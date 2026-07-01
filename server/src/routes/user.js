@@ -9,7 +9,7 @@ const { isValidName, isValidEmail, isValidPassword, sanitize } = require('../uti
 router.get('/me', auth, async (req, res, next) => {
     try {
         const [users] = await db.execute(
-            'SELECT id, name, email, pic_url FROM users WHERE id = ?',
+            'SELECT id, name, email, pic_url, theme, lang FROM users WHERE id = ?',
             [req.user.id]
         );
 
@@ -23,7 +23,9 @@ router.get('/me', auth, async (req, res, next) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                picUrl: user.pic_url
+                picUrl: user.pic_url,
+                theme: user.theme,
+                lang: user.lang
             }
         });
     } catch (error) {
@@ -72,6 +74,47 @@ router.put('/profile', auth, async (req, res, next) => {
         if (error.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({ message: 'El email ya está en uso' });
         }
+        next(error);
+    }
+});
+
+// Actualizar Preferencias (UI)
+router.put('/preferences', auth, async (req, res, next) => {
+    try {
+        const { theme, lang } = req.body;
+        const userId = req.user.id;
+
+        const validThemes = ['light', 'dark'];
+        const validLangs = ['es', 'en', 'fr', 'pt']; // Añadir los idiomas soportados
+
+        if (theme && !validThemes.includes(theme)) {
+            return res.status(400).json({ message: 'Tema inválido' });
+        }
+        if (lang && !validLangs.includes(lang)) {
+            return res.status(400).json({ message: 'Idioma inválido' });
+        }
+
+        let query = 'UPDATE users SET ';
+        let params = [];
+        let updates = [];
+
+        if (theme) {
+            updates.push('theme = ?');
+            params.push(theme);
+        }
+        if (lang) {
+            updates.push('lang = ?');
+            params.push(lang);
+        }
+
+        if (updates.length > 0) {
+            query += updates.join(', ') + ' WHERE id = ?';
+            params.push(userId);
+            await db.execute(query, params);
+        }
+
+        res.json({ message: 'Preferencias actualizadas con éxito' });
+    } catch (error) {
         next(error);
     }
 });

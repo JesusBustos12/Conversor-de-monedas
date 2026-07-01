@@ -17,6 +17,8 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,       -- Se guardará con bcrypt
     pic_url LONGTEXT,                     -- Soporta Base64 o URLs largas
+    theme VARCHAR(10) DEFAULT 'light',
+    lang VARCHAR(10) DEFAULT 'es',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;

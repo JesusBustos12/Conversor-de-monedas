@@ -20,23 +20,18 @@ export const Auth = {
     },
 
     async checkSession() {
-        const token = localStorage.getItem('currencyHub_token');
-        const storedUser = localStorage.getItem('currencyHub_session');
-
-        if (!token || !storedUser) return;
-
-        // Verificar que el token sigue siendo válido con el servidor
         try {
+            // Siempre intentamos obtener la sesión del servidor (usará la cookie)
             const data = await API.get('/user/me');
-            // Token válido: actualizar datos locales con la fuente de verdad (DB)
-            this.currentUser = data.user || JSON.parse(storedUser);
-            localStorage.setItem('currencyHub_session', JSON.stringify(this.currentUser));
+            this.currentUser = data.user;
+            UI.loadTheme();
+            UI.loadLang();
             UI.showDashboard();
         } catch (error) {
-            // Token expirado o inválido: limpiar y mostrar login
-            localStorage.removeItem('currencyHub_token');
-            localStorage.removeItem('currencyHub_session');
+            // No hay sesión activa o es inválida
             this.currentUser = null;
+            UI.loadTheme();
+            UI.loadLang();
         }
     },
 
@@ -289,8 +284,8 @@ export const Auth = {
             const data = await API.post('/auth/login', { email, pass });
             
             this.currentUser = data.user;
-            localStorage.setItem('currencyHub_token', data.token);
-            localStorage.setItem('currencyHub_session', JSON.stringify(data.user));
+            UI.loadTheme();
+            UI.loadLang();
             
             UI.showDashboard();
             
@@ -348,10 +343,15 @@ export const Auth = {
         }
     },
 
-    logout() {
+    async logout() {
+        try {
+            await API.post('/auth/logout');
+        } catch (error) {
+            console.error('Error al hacer logout', error);
+        }
         this.currentUser = null;
-        localStorage.removeItem('currencyHub_token');
-        localStorage.removeItem('currencyHub_session');
+        UI.loadTheme();
+        UI.loadLang();
         UI.showAuth();
     },
 
@@ -361,7 +361,6 @@ export const Auth = {
             
             // Re-fetch current session info or update local
             this.currentUser = { ...this.currentUser, ...updatedData };
-            localStorage.setItem('currencyHub_session', JSON.stringify(this.currentUser));
             return true;
         } catch (error) {
             if (typeof UI !== 'undefined' && UI.showNotification) {

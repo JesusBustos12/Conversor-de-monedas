@@ -1,5 +1,6 @@
 import { Auth } from './auth.js';
 import { Main } from './main.js';
+import { API } from './api.js';
 
 export const UI = {
     lang: 'es',
@@ -124,8 +125,6 @@ export const UI = {
 
     init() {
         this.attachEvents();
-        this.loadTheme();
-        this.loadLang();
     },
 
     attachEvents() {
@@ -156,18 +155,26 @@ export const UI = {
         document.getElementById('user-controls').classList.add('hidden');
     },
 
-    toggleTheme() {
+    async toggleTheme() {
         const body = document.body;
         const currentTheme = body.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
         body.setAttribute('data-theme', newTheme);
         document.getElementById('theme-label').textContent = newTheme === 'light' ? 'LITE EDITION' : 'AMBER EDITION';
-        localStorage.setItem('currencyHub_theme', newTheme);
+        
+        if (Auth.currentUser) {
+            Auth.currentUser.theme = newTheme;
+            try {
+                await API.put('/user/preferences', { theme: newTheme });
+            } catch (e) {
+                console.error('Error guardando tema', e);
+            }
+        }
     },
 
     loadTheme() {
-        const savedTheme = localStorage.getItem('currencyHub_theme') || 'light';
+        const savedTheme = (Auth.currentUser && Auth.currentUser.theme) ? Auth.currentUser.theme : 'light';
         document.body.setAttribute('data-theme', savedTheme);
         this.updateThemeLabels(savedTheme);
     },
@@ -179,14 +186,22 @@ export const UI = {
         }
     },
 
-    toggleLang() {
+    async toggleLang() {
         this.lang = this.lang === 'es' ? 'en' : 'es';
-        localStorage.setItem('currencyHub_lang', this.lang);
+        
+        if (Auth.currentUser) {
+            Auth.currentUser.lang = this.lang;
+            try {
+                await API.put('/user/preferences', { lang: this.lang });
+            } catch (e) {
+                console.error('Error guardando idioma', e);
+            }
+        }
         this.applyTranslations();
     },
 
     loadLang() {
-        this.lang = localStorage.getItem('currencyHub_lang') || 'es';
+        this.lang = (Auth.currentUser && Auth.currentUser.lang) ? Auth.currentUser.lang : 'es';
         this.applyTranslations();
     },
 
