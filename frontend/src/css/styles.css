@@ -139,13 +139,11 @@ label {
     width: 85%;
     height: 85%;
     object-fit: contain;
-    mix-blend-mode: multiply;
-    /* Fusiona el logo con el fondo amarillo */
     transition: all 0.5s ease;
 }
 
 [data-theme="dark"] .logo__img {
-    filter: brightness(1.2) contrast(1.1);
+    /* filter: brightness(1.2) contrast(1.1); */
 }
 
 .logo-shell:hover .logo__img {
@@ -350,11 +348,10 @@ label {
 }
 
 [data-theme="dark"] .auth-logo__img {
-    filter: brightness(1.8) saturate(1.6) drop-shadow(0 0 25px rgba(252, 181, 0, 0.5));
+    filter: drop-shadow(0 0 25px rgba(252, 181, 0, 0.5));
 }
 
 .logo-shell--large:hover .auth-logo__img {
-    filter: brightness(0) contrast(2);
     transform: scale(1.1) rotate(-5deg);
 }
 
