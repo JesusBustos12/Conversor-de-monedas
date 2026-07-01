@@ -518,8 +518,9 @@ label {
 }
 
 /* Estilos específicos para la cabecera del dashboard (Welcome Message) */
-#dashboard-section .welcome-msg h1 {
-    font-size: 10.5rem;
+#dashboard-section .welcome-msg h1,
+#dashboard-section .welcome-msg h1 #welcome-title {
+    font-size: 4.5rem;
     /* Aumentado solo para el título principal */
     font-weight: 800;
     color: var(--text-main);
@@ -529,7 +530,7 @@ label {
 }
 
 #dashboard-section .welcome-msg p {
-    font-size: 5.25rem;
+    font-size: 3.75rem;
     /* Aumentado para mejor legibilidad */
     font-weight: 500;
     color: var(--text-muted);
@@ -547,7 +548,7 @@ label {
 
 /* Evitar que el nombre de usuario (span) se agrande junto con el h1 */
 #dashboard-section .welcome-msg h1 .highlight {
-    font-size: 7.5rem;
+    font-size: 6.5rem;
 }
 
 .dashboard__layout {
