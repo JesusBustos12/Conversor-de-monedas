@@ -180,7 +180,31 @@ export const UI = {
         if (editProfileBtn) editProfileBtn.addEventListener('click', () => this.showProfileEdit());
     },
 
+    showSplashTransition() {
+        document.getElementById('auth-section').classList.add('hidden');
+        document.getElementById('dashboard-section').classList.add('hidden');
+        document.getElementById('user-controls').classList.add('hidden');
+        
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+            splash.classList.remove('hidden');
+            splash.style.opacity = '1';
+
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.classList.add('hidden');
+                    this.showDashboard();
+                }, 500); // wait for fade out
+            }, 5000);
+        } else {
+            this.showDashboard();
+        }
+    },
+
     showDashboard() {
+        const splash = document.getElementById('splash-screen');
+        if (splash) splash.classList.add('hidden');
         document.getElementById('auth-section').classList.add('hidden');
         document.getElementById('dashboard-section').classList.remove('hidden');
         document.getElementById('user-controls').classList.remove('hidden');
@@ -191,6 +215,8 @@ export const UI = {
     },
 
     showAuth() {
+        const splash = document.getElementById('splash-screen');
+        if (splash) splash.classList.add('hidden');
         document.getElementById('auth-section').classList.remove('hidden');
         document.getElementById('dashboard-section').classList.add('hidden');
         document.getElementById('user-controls').classList.add('hidden');

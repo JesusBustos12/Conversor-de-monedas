@@ -26,12 +26,13 @@ export const Auth = {
             this.currentUser = data.user;
             UI.loadTheme();
             UI.loadLang();
-            UI.showDashboard();
+            UI.showSplashTransition();
         } catch (error) {
             // No hay sesión activa o es inválida
             this.currentUser = null;
             UI.loadTheme();
             UI.loadLang();
+            UI.showAuth();
         }
     },
 

@@ -1910,3 +1910,71 @@ label {
         transform: rotate(360deg);
     }
 }
+
+/* --- SPLASH SCREEN TRANSITION --- */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-main);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out;
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    animation: fade-in-up 0.8s ease-out;
+}
+
+.logo-shell--huge {
+    width: 12rem;
+    height: 12rem;
+    animation: splash-pulse 2s infinite ease-in-out;
+}
+
+.splash-logo__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.splash-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -1px;
+}
+
+.splash-loader {
+    width: 4rem;
+    height: 4rem;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: button-spin 1s linear infinite;
+}
+
+@keyframes splash-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
