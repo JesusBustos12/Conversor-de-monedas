@@ -1429,8 +1429,19 @@ label {
 /* Responsive Grid System & Breakpoints */
 @media (max-width: 1100px) {
     .dashboard__layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
     }
+
+    .dashboard__left, .dashboard__right {
+        display: contents;
+    }
+
+    .dashboard__header { order: 1; }
+    .conversion-card { order: 2; }
+    .activity-card { order: 3; }
+    .dashboard__bottom-grid { order: 4; }
+    .insights-card { order: 5; }
 
     .dashboard__bottom-grid {
         grid-template-columns: 1fr;

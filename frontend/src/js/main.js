@@ -11,6 +11,7 @@ export const Main = {
         this.initGlobalImageErrorHandler();
         await this.fetchRates();
         this.setupCustomDropdowns(); // Asegurar dropdowns antes de eventos
+        this.convert(); // Forzar la conversión inicial
         this.attachConversionEvents();
         this.startAutoRefresh();
         this.updateMarketSessions();
@@ -404,7 +405,7 @@ export const Main = {
         const from = document.getElementById('dropdown-from')?.dataset.value;
         const to = document.getElementById('dropdown-to')?.dataset.value;
 
-        if (!amount || !from || !to || !this.rates[from] || !this.rates[to]) return;
+        if (isNaN(amount) || !from || !to || !this.rates[from] || !this.rates[to]) return;
 
         const rate = this.rates[to] / this.rates[from];
         const result = amount * rate;

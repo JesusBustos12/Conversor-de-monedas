@@ -4,11 +4,11 @@
   "description": "CurrencyHub - Monolito Fullstack (Node.js + MySQL)",
   "scripts": {
     "db:init": "node init-db.js",
-    "install:all": "cd server && npm install && cd ../frontend && npm install",
-    "dev:full": "cd server && npm run dev",
-    "build": "cd frontend && npm install && npm run build && cd .. && mkdir -p public && cp -r frontend/dist/* public/",
+    "install:all": "cd server && pnpm install && cd ../frontend && pnpm install",
+    "dev:full": "cd server && pnpm run dev",
+    "build": "cd frontend && pnpm install && pnpm run build && cd .. && mkdir -p public && cp -r frontend/dist/* public/",
     "start": "node app.js",
-    "test": "cd server && npm test",
+    "test": "cd server && pnpm test",
     "docker:up": "docker-compose up --build -d",
     "docker:down": "docker-compose down"
   },
@@ -26,5 +26,8 @@
     "morgan": "^1.10.1",
     "mysql2": "^3.21.1",
     "cookie-parser": "^1.4.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": []
   }
 }
